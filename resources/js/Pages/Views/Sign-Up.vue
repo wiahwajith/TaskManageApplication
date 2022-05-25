@@ -88,7 +88,7 @@
 					</a-button>
 				</a-form-item>
 			</a-form>
-			<p class="font-semibold text-muted text-center">Already have an account? <router-link to="/sign-in" class="font-bold text-dark">Sign In</router-link></p>
+			<!-- <p class="font-semibold text-muted text-center">Already have an account? <router-link to="/sign-in" class="font-bold text-dark">Sign In</router-link></p> -->
 		</a-card>
 		<!-- / Sign Up Form -->
 
@@ -96,6 +96,7 @@
 </template>
 
 <script>
+// import '../../../../public/js/app.js';
 
 	export default ({
 		data() {
@@ -104,7 +105,7 @@
 		},
 		beforeCreate() {
 			// Creates the form and adds to it component's "form" property.
-			this.form = this.$form.createForm(this, { name: 'normal_login' });
+			// this.form = this.$form.createForm(this, { name: 'normal_login' });
 		},
 		methods: {
 			// Handles input validation after submission.

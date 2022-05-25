@@ -3,7 +3,7 @@
 	"./layouts/Default.vue" .
  -->
 
-<template> <p>Sign-In</p>
+<template> 
 	<div class="sign-in">
 		
 		<a-row type="flex" :gutter="[24,24]" justify="space-around" align="middle">
@@ -72,7 +72,7 @@
 		},
 		beforeCreate() {
 			// Creates the form and adds to it component's "form" property.
-			this.form = this.$form.createForm(this, { name: 'normal_login' });
+			// this.form = this.$form.createForm(this, { name: 'normal_login' });
 		},
 		methods: {
 			// Handles input validation after submission.

@@ -72,7 +72,7 @@
 		},
 		beforeCreate() {
 			// Creates the form and adds to it component's "form" property.
-			this.form = this.$form.createForm(this, { name: 'normal_login' });
+			// this.form = this.$form.createForm(this, { name: 'normal_login' });
 		},
 		methods: {
 			// Handles input validation after submission.
