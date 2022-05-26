@@ -19,24 +19,17 @@
 					:form="form"
 					class="login-form"
 					@submit="handleSubmit"
-					:hideRequiredMark="true"
 				>
-					<a-form-item class="mb-10" label="Email" :colon="false">
+					<a-form-item class="mb-10" label="Email" >
 						<a-input 
-						v-decorator="[
-						'email',
-						{ rules: [{ required: true, message: 'Please input your email!' }] },
-						]" placeholder="Email" />
+						placeholder="Email" />
 					</a-form-item>
-					<a-form-item class="mb-5" label="Password" :colon="false">
+					<a-form-item class="mb-5" label="Password">
 						<a-input
-						v-decorator="[
-						'password',
-						{ rules: [{ required: true, message: 'Please input your password!' }] },
-						]" type="password" placeholder="Password" />
+						type="password" placeholder="Password" />
 					</a-form-item>
 					<a-form-item class="mb-10">
-    					<a-switch v-model="rememberMe" /> Remember Me
+						<a-switch v-model="rememberMe" /> Remember Me
 					</a-form-item>
 					<a-form-item>
 						<a-button type="primary" block html-type="submit" class="login-form-button">
@@ -46,7 +39,7 @@
 				</a-form>
 				<!-- / Sign In Form -->
 
-				<p class="font-semibold text-muted">Don't have an account? <router-link to="/sign-in" class="font-bold text-dark">Sign Up</router-link></p>
+			
 			</a-col>
 			<!-- / Sign In Form Column -->
 
@@ -66,13 +59,13 @@
 	export default ({
 		data() {
 			return {
+
+				form:{
+
+				},
 				// Binded model property for "Sign In Form" switch button for "Remember Me" .
 				rememberMe: true,
 			}
-		},
-		beforeCreate() {
-			// Creates the form and adds to it component's "form" property.
-			// this.form = this.$form.createForm(this, { name: 'normal_login' });
 		},
 		methods: {
 			// Handles input validation after submission.
@@ -85,6 +78,15 @@
 				});
 			},
 		},
+		watch: {
+			lastAndMarkPrice: {
+				deep: true,
+
+				handler (newValue, oldValue) {
+				// ...
+				}
+			}
+			}
 	})
 
 </script>

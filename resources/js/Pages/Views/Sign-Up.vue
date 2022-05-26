@@ -40,30 +40,20 @@
 			>
 				<a-form-item class="mb-10">
 					<a-input
-						v-decorator="[
-						'name',
-						{ rules: [{ required: true, message: 'Please input your name!' }] },
-						]"
 						placeholder="Name"
 					>
 					</a-input>
 				</a-form-item>
 				<a-form-item class="mb-10">
 					<a-input
-						v-decorator="[
-						'email',
-						{ rules: [{ required: true, message: 'Please input your email!' }] },
-						]"
+
 						placeholder="Email"
 					>
 					</a-input>
 				</a-form-item>
 				<a-form-item class="mb-5">
 					<a-input
-						v-decorator="[
-						'password',
-						{ rules: [{ required: true, message: 'Please input your Password!' }] },
-						]"
+
 						type="password"
 						placeholder="Password"
 					>
@@ -71,13 +61,7 @@
 				</a-form-item>
 				<a-form-item class="mb-10">
 					<a-checkbox
-						v-decorator="[
-						'remember',
-						{
-							valuePropName: 'checked',
-							initialValue: true,
-						},
-						]"
+
 					>
 						I agree the <a href="#" class="font-bold text-dark">Terms and Conditions</a>
 					</a-checkbox>
@@ -101,6 +85,12 @@
 	export default ({
 		data() {
 			return {
+				form:{
+					name:'',
+					email:'',
+					password:'',
+					remember:'',
+				}
 			}
 		},
 		beforeCreate() {
