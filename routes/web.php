@@ -17,6 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return Inertia::render('Views/Dashboard');
 });
+Route::get('/project', function () {
+    return Inertia::render('Views/Projects');
+});
+Route::get('/quotation', function () {
+    return Inertia::render('Views/Quotation');
+});
+Route::get('/calendar', function () {
+    return Inertia::render('Views/Calendar');
+});
 Route::get('/home', function () {
     return Inertia::render('index');
 });

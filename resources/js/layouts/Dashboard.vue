@@ -10,9 +10,7 @@
 			
 			
 			<!-- Main Sidebar -->
-			<DashboardSidebar
-			
-			></DashboardSidebar>
+			<DashboardSidebar></DashboardSidebar>
 			<!-- / Main Sidebar -->
 
 			<!-- Layout Content -->
@@ -22,14 +20,13 @@
 				<!-- / Layout Header ( Navbar ) -->
 
 				<!-- Layout Header's Conditionally Fixed Wrapper -->
-				<DashboardHeader
-				></DashboardHeader>
+				<DashboardHeader></DashboardHeader>
 				<!-- / Layout Header's Conditionally Fixed Wrapper -->
 
 				<!-- Page Content -->
-				<a-layout-content>
-
-				</a-layout-content>
+					<slot>
+						
+					</slot>
 				<!-- / Page Content -->
 
 				<!-- Layout Footer -->
@@ -116,7 +113,7 @@
 		computed: {
 			// Sets layout's element's class based on route's meta data.
 			layoutClass() {
-				return this.$route.meta.layoutClass ;
+				// return this.$route.meta.layoutClass ;
 			}
 		},
 	})

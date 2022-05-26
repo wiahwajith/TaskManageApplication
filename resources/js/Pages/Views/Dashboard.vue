@@ -4,7 +4,9 @@
  -->
 
 <template>
-	<div>
+	<!-- <Dashboard></Dashboard> -->
+	<Dashboard>
+		<div>
 		<!-- Counter Widgets -->
 		<a-row :gutter="24">
 			<a-col :span="24" :lg="12" :xl="6" class="mb-24" v-for="(stat, index) in stats" :key="index">
@@ -86,11 +88,14 @@
 			</a-col>
 		</a-row>
 		<!-- / Cards -->
-
 	</div>
+	</Dashboard>
 </template>
 
 <script>
+
+	// This is the dashboard page, it uses the dashboard layout in: 
+	import Dashboard from '../../layouts/Dashboard' ;
 
 	// Bar chart for "Active Users" card.
 	import CardBarChart from '../../components/Cards/CardBarChart' ;
@@ -272,6 +277,7 @@
 			CardOrderHistory,
 			CardInfo,
 			CardInfo2,
+			Dashboard
 		},
 		data() {
 			return {
