@@ -11,8 +11,8 @@
 			:split="false"
 			:data-source="data"
 		>
-			<a-list-item slot="renderItem" slot-scope="item">
-				<a-button slot="actions" type="link">
+			<a-list-item v-for="(item , key) in data">
+				<a-button>
 					REPLY
 				</a-button>
 				<a-list-item-meta
@@ -20,7 +20,7 @@
 					:description="item.code"
 				>
 					<a-avatar
-					slot="avatar"
+					
 					:size="48"
 					shape="square"
 					:src="item.avatar"
