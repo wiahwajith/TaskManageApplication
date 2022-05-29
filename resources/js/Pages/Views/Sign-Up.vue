@@ -34,34 +34,46 @@
 			<p class="text-center my-25 font-semibold text-muted">Or</p>
 			<a-form
 				id="components-form-demo-normal-login"
-				:form="form"
 				class="login-form"
+				:model="form"
 				@submit="handleSubmit"
 			>
+
+			<!-- <input type="text" v-model="form.name"> -->
 				<a-form-item class="mb-10">
 					<a-input
+						type="text"
+						v-model:value="form.name"
 						placeholder="Name"
-					>
+					>	
 					</a-input>
 				</a-form-item>
 				<a-form-item class="mb-10">
 					<a-input
-
+						v-model:value="form.email"
 						placeholder="Email"
 					>
 					</a-input>
 				</a-form-item>
 				<a-form-item class="mb-5">
 					<a-input
-
+						v-model:value="form.password"
 						type="password"
 						placeholder="Password"
 					>
 					</a-input>
 				</a-form-item>
+				<a-form-item class="mb-5">
+					<a-input
+						v-model:value="form.password_confirmation"
+						type="password"
+						placeholder="Password Confirm"
+					>
+					</a-input>
+				</a-form-item>
 				<a-form-item class="mb-10">
 					<a-checkbox
-
+						v-model:value="form.remember"
 					>
 						I agree the <a href="#" class="font-bold text-dark">Terms and Conditions</a>
 					</a-checkbox>
@@ -80,7 +92,7 @@
 </template>
 
 <script>
-// import '../../../../public/js/app.js';
+import { showAlert } from "../../Utility/Utility";
 
 	export default ({
 		data() {
@@ -89,23 +101,25 @@
 					name:'',
 					email:'',
 					password:'',
+					password_confirmation:'',
 					remember:'',
 				}
 			}
 		},
-		beforeCreate() {
-			// Creates the form and adds to it component's "form" property.
-			// this.form = this.$form.createForm(this, { name: 'normal_login' });
-		},
 		methods: {
 			// Handles input validation after submission.
-			handleSubmit(e) {
-				e.preventDefault();
-				this.form.validateFields((err, values) => {
-					if ( !err ) {
-						console.log('Received values of form: ', values) ;
-					}
-				});
+			handleSubmit() {
+				this.$inertia.post(
+                route("register"),
+                this.form,
+                {
+					
+					onFinish: () => {
+						console.log(this.form.name);
+                        showAlert(this.$page);
+                    }
+                }
+            );	
 			},
 		},
 	})

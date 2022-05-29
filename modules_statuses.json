@@ -1,4 +1,9 @@
 {
     "Todo": true,
-    "Task": true
+    "Task": true,
+    "Admin": true,
+    "Employee": true,
+    "Client": true,
+    "Controller": true,
+    "UserController": true
 }

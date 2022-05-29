@@ -21,16 +21,19 @@
 					@submit="handleSubmit"
 					:hideRequiredMark="true"
 				>
-					<a-form-item class="mb-10" label="Email" :colon="false">
+					<a-form-item  class="mb-5" label="Email" :colon="false">
 						<a-input 
+						v-model:value="form.email"
 						placeholder="Email" />
 					</a-form-item>
 					<a-form-item class="mb-5" label="Password" :colon="false">
 						<a-input
-						type="password" placeholder="Password" />
+						v-model:value="form.password"
+						type="password" 
+						placeholder="Password" />
 					</a-form-item>
 					<a-form-item class="mb-10">
-    					<a-switch v-model="rememberMe" /> Remember Me
+						<a-switch v-model="rememberMe" /> Remember Me
 					</a-form-item>
 					<a-form-item>
 						<a-button type="primary" block html-type="submit" class="login-form-button">
@@ -40,7 +43,7 @@
 				</a-form>
 				<!-- / Sign In Form -->
 
-				<p class="font-semibold text-muted">Don't have an account? <router-link to="/sign-in" class="font-bold text-dark">Sign Up</router-link></p>
+				<p class="font-semibold text-muted">Don't have an account? <inertia-link :href="$route('register')" class="font-bold text-dark">Sign Up</inertia-link></p>
 			</a-col>
 			<!-- / Sign In Form Column -->
 
@@ -56,10 +59,15 @@
 </template>
 
 <script>
-
+import { showAlert } from "../../Utility/Utility";
 	export default ({
 		data() {
 			return {
+
+				form:{
+					email:'',
+					password:''
+				},
 				// Binded model property for "Sign In Form" switch button for "Remember Me" .
 				rememberMe: true,
 			}
@@ -70,13 +78,16 @@
 		},
 		methods: {
 			// Handles input validation after submission.
-			handleSubmit(e) {
-				e.preventDefault();
-				this.form.validateFields((err, values) => {
-					if ( !err ) {
-						console.log('Received values of form: ', values) ;
-					}
-				});
+			handleSubmit() {
+				this.$inertia.post(
+                route("login"),
+                this.form,
+                {
+					onFinish: () => {
+                        showAlert(this.$page);
+                    }
+                }
+            );	
 			},
 		},
 	})
