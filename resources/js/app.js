@@ -2,7 +2,7 @@ require('./bootstrap');
 
 import {createApp, h} from 'vue';
 
-import { App, plugin } from '@inertiajs/inertia-vue3';
+import { App, plugin, Link } from '@inertiajs/inertia-vue3';
 
 import { InertiaProgress } from '@inertiajs/progress';
 
@@ -37,6 +37,7 @@ InertiaProgress.init();
     app.provide('$route', window.route);
 
     // Adding template layouts to the vue components.
+    app.component("inertia-link", Link);
     app.component("layout-default", DefaultLayout);
     app.component("layout-dashboard", DashboardLayout);
     app.component("layout-dashboard-rtl", DashboardRTLLayout);

@@ -9,6 +9,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
+use Modules\Admin\Entities\Company;
+use Modules\Admin\Entities\Employer;
 
 class User extends Authenticatable implements MustVerifyEmail 
 {
@@ -43,9 +45,22 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    //relation
+    public function employer()
+    {
+        return $this->belongsTo(Employer::class, 'employees_id');
+    }
+    public function company()
+    {
+        return $this->belongsTo(Company::class,'id','company_id');
+    }
 
     public function setPasswordAttribute($password)
     {   
         $this->attributes['password'] = Hash::make($password);
+    }
+    public function getRoleNameAttribute()
+    {
+        return $this->getRoleNames()->first() ?? null;
     }
 }

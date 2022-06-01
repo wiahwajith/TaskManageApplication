@@ -5,7 +5,7 @@
 
 <template>
 	<!-- <Dashboard></Dashboard> -->
-	<Dashboard>
+	<AdminDashboard>
 		<div>
 		<!-- Counter Widgets -->
 		<a-row :gutter="24">
@@ -89,13 +89,13 @@
 		</a-row>
 		<!-- / Cards -->
 	</div>
-	</Dashboard>
+	</AdminDashboard>
 </template>
 
 <script>
 
 	// This is the dashboard page, it uses the dashboard layout in: 
-	import Dashboard from '../../layouts/Dashboard' ;
+	import AdminDashboard from '../../layouts/AdminDashboard' ;
 
 	// Bar chart for "Active Users" card.
 	import CardBarChart from '../../components/Cards/CardBarChart' ;
@@ -277,7 +277,7 @@
 			CardOrderHistory,
 			CardInfo,
 			CardInfo2,
-			Dashboard
+			AdminDashboard
 		},
 		data() {
 			return {

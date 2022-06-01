@@ -10,7 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+//>>>>>>>>>>>> **** .... C L I E N T ...... **** <<<<<<<<<<<<
 
-Route::prefix('employee')->group(function() {
-    Route::get('/', 'EmployeeController@index');
+Route::prefix('employee')->name('emp.')->group(function () {
+
+    Route::get('/', 'EmployeeController@index')->name('dashboard');
+
+
 });
+
+

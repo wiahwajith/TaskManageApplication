@@ -76,6 +76,6 @@ class RegisterController extends Controller
     protected function registered(Request $request, $user)
     {
         $user->assignRole('Admin');
-        return Inertia::render('Admin/Dashboard');
+        return redirect()->route('admin.dashboard');
     }
 }

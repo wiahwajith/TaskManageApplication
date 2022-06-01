@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
+use Modules\Admin\Entities\Company;
 use Spatie\Permission\Models\Permission;
 
 class RoleAndPermission extends Seeder
@@ -119,13 +122,38 @@ class RoleAndPermission extends Seeder
         $role11= Role::create(['name' => 'QA Engineer']);
         $role11->givePermissionTo('create Task');
         $role11->givePermissionTo('edit Task');
+
         // gets all permissions via Gate::before rule; see AuthServiceProvider
 
         // create Super-Admin
-        $user = \App\Models\User::factory()->create([
+        $user = \App\Models\User::create([
             'name' => 'Example Super-Admin User',
             'email' => 'superadmin@example.com',
-        ]);
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10), ]);
+
+        // ])->company([
+        //     'name'=>'M-studio',
+        //     'email'=>'mstudio@gmail.com',
+        //     'web'=>'www.ms.com',
+        //     'city'=>'Matara',
+        //     'address'=>'Marata 136/A, Mirissa',
+        //     'contact_number'=>'076258796',
+        // ]);
+        // \Modules\Admin\Entities\Company::create([
+        //     'name'=>'M-studio',
+        //     'email'=>'mstudio@gmail.com',
+        //     'web'=>'www.ms.com',
+        //     'city'=>'Matara',
+        //     'address'=>'Marata 136/A, Mirissa',
+        //     'contact_number'=>'076258796',
+        // ])->owner([
+        //     'name' => 'Example Super-Admin User',
+        //     'email' => 'superadmin@example.com',
+        //     'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        // ]);
+        
         $user->assignRole($role1);
     }
 }

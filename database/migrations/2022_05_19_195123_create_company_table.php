@@ -22,7 +22,7 @@ class CreateCompanyTable extends Migration
             $table->string('address');
             $table->string('contact_number');
 
-            $table->foreignId('contact_person');
+            $table->foreignId('contact_person')->nullable();
             $table->foreign('contact_person')->on('users')->references('id')->cascadeOnDelete();
             $table->timestamps();
         });

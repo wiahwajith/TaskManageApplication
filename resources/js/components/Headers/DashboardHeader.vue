@@ -12,15 +12,15 @@
 
 					<!-- Header Breadcrumbs -->
 					<a-breadcrumb>
-						<!-- <a-breadcrumb-item><router-link to="/"> Pages</router-link></a-breadcrumb-item>
-						<a-breadcrumb-item>{{ this.$route.name }}</a-breadcrumb-item> -->
+						<a-breadcrumb-item><inertia-link :href="$route('home')"> Pages</inertia-link></a-breadcrumb-item>
+						<a-breadcrumb-item><inertia-link> {{ this.$route().current() }}</inertia-link></a-breadcrumb-item>
 					</a-breadcrumb>
 					<!-- / Header Breadcrumbs -->
 
 					<!-- Header Page Title -->
-					<div class="ant-page-header-heading">
-						<!-- <span class="ant-page-header-heading-title">{{ this.$route.name }}</span> -->
-					</div>
+					<!-- <div class="ant-page-header-heading">
+						<span class="ant-page-header-heading-title">{{ this.$route().current() }}</span>
+					</div> -->
 					<!-- / Header Page Title -->
 
 				</a-col>
@@ -73,12 +73,12 @@
 					</a-button>
 					<a-dropdown :trigger="['click']">
 					<a class="ant-dropdown-link" @click.prevent>
-						<router-link to="/sign-in" class="btn-sign-in" @click="e => e.preventDefault()">
+						<span to="/sign-in" class="btn-sign-in" @click="e => e.preventDefault()">
 							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path fill-rule="evenodd" clip-rule="evenodd" d="M18 10C18 14.4183 14.4183 18 10 18C5.58172 18 2 14.4183 2 10C2 5.58172 5.58172 2 10 2C14.4183 2 18 5.58172 18 10ZM12 7C12 8.10457 11.1046 9 10 9C8.89543 9 8 8.10457 8 7C8 5.89543 8.89543 5 10 5C11.1046 5 12 5.89543 12 7ZM9.99993 11C7.98239 11 6.24394 12.195 5.45374 13.9157C6.55403 15.192 8.18265 16 9.99998 16C11.8173 16 13.4459 15.1921 14.5462 13.9158C13.756 12.195 12.0175 11 9.99993 11Z" fill="#111827"/>
 							</svg>
 							<span>{{user.name}}</span>
-						</router-link>
+						</span>
 					<DownOutlined />
 					</a>
 					<template #overlay>
@@ -195,10 +195,7 @@ import { DownOutlined } from '@ant-design/icons-vue';
 			},
 			// logout route
 			logout() {
-				this.$inertia.post(
-                route("logout")
-            );
-			Swal.fire("Success!", 'email resend successfully!', "success");	
+				this.$inertia.post(route("logout"));
 			},
 		},
 		mounted: function(){

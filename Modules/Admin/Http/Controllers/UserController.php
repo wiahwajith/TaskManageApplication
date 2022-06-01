@@ -5,7 +5,8 @@ namespace Modules\Admin\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Admin\Providers\UserRepository;
+
+use App\Repository\Admin\UserRepository;
 use Illuminate\Contracts\Support\Renderable;
 
 class UserController extends Controller
@@ -24,8 +25,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $allUser = $this->userRepository->AllUser();
-        return Inertia::render('Admin/UserAdd',compact('allUser'));
+        $Users = $this->userRepository->AllUser();
+        $roles = $this->userRepository->allUserRoles();
+        return Inertia::render('Admin/UserAdd',compact('Users','roles'));
     }
 
     /**

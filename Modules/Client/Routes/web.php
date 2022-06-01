@@ -11,6 +11,12 @@
 |
 */
 
-Route::prefix('client')->group(function() {
-    Route::get('/', 'ClientController@index');
+//>>>>>>>>>>>> **** .... C L I E N T ...... **** <<<<<<<<<<<<
+
+Route::prefix('client')->name('client.')->group(function () {
+
+    Route::get('/', 'ClientController@index')->name('dashboard');
+
+
 });
+
