@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
+use App\Repository\Admin\UserRepository;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -26,21 +27,24 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
+    private $userRepository;
+
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserRepository $userRepository)
     {
         $this->middleware('guest');
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -73,9 +77,16 @@ class RegisterController extends Controller
         ]);
     }
 
+        /**
+     * Create a new user instance after a valid registration.
+     *
+     * @var 
+     * 
+     */
     protected function registered(Request $request, $user)
     {
         $user->assignRole('Admin');
-        return redirect()->route('admin.dashboard');
+        $this->userRepository->userCompanyCreate($user,$request);
+        return redirect()->route('verification.notice');
     }
 }

@@ -2,12 +2,15 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Hash;
 use App\Repository\Admin\UserRepository;
 use Illuminate\Contracts\Support\Renderable;
+use Modules\Admin\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
@@ -44,9 +47,24 @@ class UserController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $tempPassword = Hash::make('password');
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $tempPassword,
+        ])->company([
+            'name'=> $request->name ??null,
+            'email'=> $request->email ??null,
+            'web'=> $request->web ??null,
+            'city'=> $request->city ??null,
+            'address'=> $request->address ??null,
+            'contact_number'=> $request->contact_number ??null,
+        ]);
+
+        return $user;
+
     }
 
     /**

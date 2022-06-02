@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Admin\Company;
+use App\Models\Admin\Employer;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Hash;
-use Modules\Admin\Entities\Company;
-use Modules\Admin\Entities\Employer;
 
 class User extends Authenticatable implements MustVerifyEmail 
 {
@@ -52,13 +52,13 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function company()
     {
-        return $this->belongsTo(Company::class,'id','company_id');
+        return $this->hasOne(Company::class,'id','company_id');
     }
 
-    public function setPasswordAttribute($password)
-    {   
-        $this->attributes['password'] = Hash::make($password);
-    }
+    // public function setPasswordAttribute($password)
+    // {   
+    //     $this->attributes['password'] = Hash::make($password);
+    // }
     public function getRoleNameAttribute()
     {
         return $this->getRoleNames()->first() ?? null;

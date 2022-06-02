@@ -16,6 +16,7 @@ class Company extends Model
         'city',
         'address',
         'contact_number',
+        'contact_person',
     ];
     protected $table = 'company';
 

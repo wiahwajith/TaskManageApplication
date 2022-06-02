@@ -16,10 +16,10 @@ class CreateCompanyTable extends Migration
         Schema::create('company', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email');
-            $table->string('web');
-            $table->string('city');
-            $table->string('address');
+            $table->string('email')->nullable();
+            $table->string('web')->nullable();
+            $table->string('city')->nullable();
+            $table->string('address')->nullable();
             $table->string('contact_number');
 
             $table->foreignId('contact_person')->nullable();

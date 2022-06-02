@@ -38,7 +38,7 @@
 					>
 
 					<a-form-item label="User Name" :required="true">
-					<a-input v-model:value="form.user_name"/>
+					<a-input v-model:value="form.name"/>
 					</a-form-item>
 					<a-form-item label="First Name">
 					<a-input v-model:value="form.first_name" />
@@ -146,7 +146,7 @@
 		data() {
 			return {
 				form :{
-					user_name:'',
+					name:'',
 					first_name:'',
 					last_name:'',
 					email:'',
@@ -174,7 +174,7 @@
 		methods:{
 			onSubmit() {
 				this.$inertia.post(
-                route("login"),
+                route("admin.user.store"),
                 this.form,
                 {
 					onFinish: () => {
