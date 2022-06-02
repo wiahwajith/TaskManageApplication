@@ -41,7 +41,7 @@
 					<a-input v-model:value="form.name"/>
 					</a-form-item>
 					<a-form-item label="First Name">
-					<a-input v-model:value="form.first_name" />
+					<a-input v-model:value="form.first_name" :required="true" />
 					</a-form-item>
 
 					<a-form-item label="Last Name">
@@ -52,10 +52,10 @@
 					<a-input v-model:value="form.email" />
 					</a-form-item>
 
-					<a-form-item label="Role">
+					<a-form-item label="Role" :required="true">
 						<a-select v-model:value="form.role" placeholder="please select employer role">
-							<a-select-option v-for="(role, key) in roles" :key="key" value="">{{ role}}</a-select-option>
-							<a-select-option value="beijing">Zone two</a-select-option>
+							<a-select-option v-for="(role, key) in roles" :key="key" :value="role.name">{{ role.name }}</a-select-option>
+
 						</a-select>
 					</a-form-item>
 
@@ -78,13 +78,19 @@
 
 					<a-form-item label="Date Of Birth">
 					<a-space direction="vertical">
-						<a-date-picker v-model:value="form.DOB" />
+						<a-date-picker 
+						format="YYYY-MM-DD"
+						@Change="onChangeDOB"
+						/>
 					</a-space>
 					</a-form-item>
 
 					<a-form-item label="Join Date">
 					<a-space direction="vertical">
-						<a-date-picker v-model:value="form.join_date" />
+						<a-date-picker
+							format="YYYY-MM-DD"
+							@change="onChangeJoinDate"
+						/>
 					</a-space>
 					</a-form-item>
 
@@ -129,6 +135,8 @@
 <script>
 	// This is the dashboard page, it uses the dashboard layout in: 
 	import Dashboard from '../../layouts/Dashboard';
+	import { showAlert } from "../../Utility/Utility";
+	import Swal from "sweetalert2";
 	import { UserSwitchOutlined, TeamOutlined, UserAddOutlined } from '@ant-design/icons-vue';
 	import { ref } from 'vue';
 
@@ -153,7 +161,6 @@
 					web:'',
 					city:'',
 					NIC:'',
-					emp_id:'',
 					DOB:'',
 					join_date:'',
 					designation:'',
@@ -179,12 +186,37 @@
                 {
 					onFinish: () => {
                         showAlert(this.$page);
+						this.resetForm();
                     }
                 }
             );	
 			},
-			resetForm(e){
-				e.target.reset();
+			resetForm(){
+					this.form.name ='';
+					this.form.first_name ='';
+					this.form.last_name ='';
+					this.form.email ='';
+					this.form.web ='';
+					this.form.city ='';
+					this.form.NIC =null;
+					this.form.DOB =null;
+					this.form.join_date ='';
+					this.form.designation ='';
+					this.form.description ='';
+					this.form.address ='';
+					this.form.mobile_number ='';
+					this.form.role ='';
+				
+			},
+			onChangeDOB(date , dateString){
+				
+				this.form.DOB = dateString;
+				
+			},
+			onChangeJoinDate(date , dateString){
+
+				this.form.join_date = dateString;
+				
 			}
 		},
 		

@@ -25,6 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'company_id',
     ];
 
     /**
@@ -59,8 +60,11 @@ class User extends Authenticatable implements MustVerifyEmail
     // {   
     //     $this->attributes['password'] = Hash::make($password);
     // }
+
+    //attribute
     public function getRoleNameAttribute()
     {
         return $this->getRoleNames()->first() ?? null;
     }
+
 }

@@ -16,18 +16,18 @@ class CreateEmployeersTable extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email');
-            $table->string('web');
-            $table->string('city');
-            $table->bigInteger('NIC');
-            $table->bigInteger('emp_id');
-            $table->date('DOB');
-            $table->date('join_date');
-            $table->string('designation');
-            $table->string('description');
-            $table->string('address');
-            $table->string('mobile_number');
+            $table->string('last_name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('web')->nullable();
+            $table->string('city')->nullable();
+            $table->bigInteger('NIC')->nullable();
+            $table->bigInteger('emp_id')->nullable();
+            $table->date('DOB')->nullable();
+            $table->date('join_date')->nullable();
+            $table->string('designation')->nullable();
+            $table->string('description')->nullable();
+            $table->string('address')->nullable();
+            $table->string('mobile_number')->nullable();
 
             $table->foreignId('employees_id');
             $table->foreign('employees_id')->on('users')->references('id')->cascadeOnDelete();

@@ -2,11 +2,15 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Models\Admin\Company;
+use App\Models\Admin\Employer;
+use Carbon\Carbon;
 use App\Models\User;
 use Inertia\Inertia;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Repository\Admin\UserRepository;
 use Illuminate\Contracts\Support\Renderable;
@@ -28,9 +32,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $Users = $this->userRepository->AllUser();
+        $users = $this->userRepository->AllUser();
         $roles = $this->userRepository->allUserRoles();
-        return Inertia::render('Admin/UserAdd',compact('Users','roles'));
+
+        return Inertia::render('Admin/UserAdd',compact(['users','roles']));
     }
 
     /**
@@ -49,21 +54,10 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $tempPassword = Hash::make('password');
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $tempPassword,
-        ])->company([
-            'name'=> $request->name ??null,
-            'email'=> $request->email ??null,
-            'web'=> $request->web ??null,
-            'city'=> $request->city ??null,
-            'address'=> $request->address ??null,
-            'contact_number'=> $request->contact_number ??null,
-        ]);
 
-        return $user;
+        $create = $this->userRepository->addEmployer($request);
+        if($create)return back()->with('successMessage', 'User add successfully!');
+        return back()->with('errorMessage', 'problem with employer creating!');
 
     }
 

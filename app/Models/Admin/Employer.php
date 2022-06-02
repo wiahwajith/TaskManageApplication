@@ -9,6 +9,8 @@ class Employer extends Model
 {
     use HasFactory;
 
+    protected $table ="employees";
+
     protected $fillable = [
         'first_name',
         'last_name',
@@ -25,9 +27,20 @@ class Employer extends Model
         'mobile_number',
         'employees_id'
     ];
-
+    //relation
     public function user()
     {
         return $this->hasOne(User::class , 'id' , 'employees_id');
+    }
+
+    //model function
+
+    public function generateUniqueCode()
+    {
+        do {
+            $code = random_int(100000, 999999);
+        } while (self::where("emp_id", "=", $code)->first());
+  
+        return $code;
     }
 }

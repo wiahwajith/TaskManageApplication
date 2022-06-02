@@ -206,7 +206,7 @@ import { message } from 'ant-design-vue';
 					{
 						
 						onFinish: () => {
-							console.log(this.form.name);
+
 							showAlert(this.$page);
 						}
 					}
