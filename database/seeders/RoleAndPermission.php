@@ -115,7 +115,7 @@ class RoleAndPermission extends Seeder
         $role9->givePermissionTo('create Task');
         $role9->givePermissionTo('edit Task');
 
-        $role10 = Role::create(['name' => 'Dara Engineer']);
+        $role10 = Role::create(['name' => 'Data Engineer']);
         $role10->givePermissionTo('create Task');
         $role10->givePermissionTo('edit Task');
         

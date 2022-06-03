@@ -17,17 +17,13 @@ use Inertia\Inertia;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    Route::get('/', 'AdminController@index')->name('dashboard');
+    Route::group(['middleware' => 'auth'], function() {
 
-    Route::resource('user', UserController::class);
-
-    // Route::get('/dashboard', function () {
-    //     return Inertia::render('Admin/AdminDashboard');
-    // });
-    // Route::get('/user', function () {
-    //     return Inertia::render('Admin/UserAdd');
-    // });
-
+        Route::get('/', 'AdminController@index')->name('dashboard');
+    
+        Route::resource('user', UserController::class);
+    
+    });
 
 });
 

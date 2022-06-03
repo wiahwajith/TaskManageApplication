@@ -25,12 +25,14 @@ class Employer extends Model
         'description',
         'address',
         'mobile_number',
-        'employees_id'
+        'employees_id',
+        'company_id',
+        'rate'
     ];
     //relation
     public function user()
     {
-        return $this->hasOne(User::class , 'id' , 'employees_id');
+        return $this->hasOne('App\Models\User' , 'id' , 'employees_id');
     }
 
     //model function

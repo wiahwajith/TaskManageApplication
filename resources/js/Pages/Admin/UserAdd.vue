@@ -17,7 +17,40 @@
 			</template>
 			<div style="background: #ececec; padding: 30px">
 				<a-card title="View all Employee" :bordered="false" style="width: 1000px">
-				view all user 
+				<a-table :columns="columns" :data-source="employers">
+					<template #name="{ text }">
+					<a>{{ text }}</a>
+					</template>
+					<template #customTitle>
+					<span>
+						<smile-outlined />
+						Name
+					</span>
+					</template>
+					<template #tags="{ text: tags }">
+					<span>
+						<a-tag
+						v-for="tag in tags"
+						:key="tag"
+						:color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'"
+						>
+						{{ tag.toUpperCase() }}
+						</a-tag>
+					</span>
+					</template>
+					<!-- <template #action="{ record }">
+					<span>
+						<a>Invite 一 {{ record.name }}</a>
+						<a-divider type="vertical" />
+						<a>Delete</a>
+						<a-divider type="vertical" />
+						<a class="ant-dropdown-link">
+						More actions
+						<down-outlined />
+						</a>
+					</span>
+					</template> -->
+				</a-table>
 				</a-card>
 			</div>
 		</a-tab-pane>
@@ -137,8 +170,63 @@
 	import Dashboard from '../../layouts/Dashboard';
 	import { showAlert } from "../../Utility/Utility";
 	import Swal from "sweetalert2";
-	import { UserSwitchOutlined, TeamOutlined, UserAddOutlined } from '@ant-design/icons-vue';
+	import { UserSwitchOutlined, TeamOutlined, UserAddOutlined, SmileOutlined, DownOutlined  } from '@ant-design/icons-vue';
 	import { ref } from 'vue';
+
+
+
+		const columns = [
+		{
+			dataIndex: 'full_name',
+			key: 'full_name',
+			slots: { title: 'customTitle', customRender: 'name' },
+		},
+		{
+			title: 'EMPID',
+			dataIndex: 'emp_id',
+			key: 'emp_id',
+		},
+		{
+			title: 'Address',
+			dataIndex: 'address',
+			key: 'address',
+		},
+		{
+			title: 'email',
+			dataIndex: 'email',
+			key: 'email',
+		},
+		{
+			title: 'Role',
+			key: 'role',
+			dataIndex: 'role',
+			slots: { customRender: 'tags' },
+		},
+	];
+
+	const data = [
+	{
+		key: '1',
+		name: 'John Brown',
+		age: 32,
+		address: 'New York No. 1 Lake Park',
+		tags: ['nice', 'developer'],
+	},
+	{
+		key: '2',
+		name: 'Jim Green',
+		age: 42,
+		address: 'London No. 1 Lake Park',
+		tags: ['loser'],
+	},
+	{
+		key: '3',
+		name: 'Joe Black',
+		age: 32,
+		address: 'Sidney No. 1 Lake Park',
+		tags: ['cool', 'teacher'],
+	},
+	];
 
 	export default ({
 		components: {
@@ -146,9 +234,11 @@
 			UserAddOutlined,
 			TeamOutlined,
 			UserSwitchOutlined,
+			SmileOutlined,
+			DownOutlined,
 		},
 		props: [
-			'users',
+			'employers',
 			'roles',
 		],
 		data() {
@@ -176,6 +266,8 @@
 				wrapperCol: {
 					span: 14,
 				},
+				data,
+				columns,
 				};
 		},
 		methods:{
