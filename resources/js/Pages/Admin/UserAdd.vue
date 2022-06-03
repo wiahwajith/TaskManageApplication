@@ -32,7 +32,7 @@
 						<a-tag
 						v-for="tag in tags"
 						:key="tag"
-						:color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'"
+						:color="tag === 'Client' ? 'volcano' : tag.length > 6 ? 'geekblue' : 'green'"
 						>
 						{{ tag.toUpperCase() }}
 						</a-tag>
@@ -156,7 +156,40 @@
 			</template>
 			<div style="background: #ececec; padding: 30px">
 				<a-card title="Edit Employee" :bordered="false" style="width: 1000px">
-				Edit user 
+				<a-table :columns="columns2" :data-source="employers">
+					<template #name="{ text }">
+					<a>{{ text }}</a>
+					</template>
+					<template #customTitle>
+					<span>
+						<smile-outlined />
+						Name
+					</span>
+					</template>
+					<template #tags="{ text: tags }">
+					<span>
+						<a-tag
+						v-for="tag in tags"
+						:key="tag"
+						:color="tag === 'Client' ? 'volcano' : tag.length > 6 ? 'geekblue' : 'green'"
+						>
+						{{ tag.toUpperCase() }}
+						</a-tag>
+					</span>
+					</template>
+					<template #action="{ record }">
+					<span>
+						<a>Invite 一 {{ record.name }}</a>
+						<a-divider type="vertical" />
+						<a>Delete</a>
+						<a-divider type="vertical" />
+						<a class="ant-dropdown-link">
+						More actions
+						<down-outlined />
+						</a>
+					</span>
+					</template>
+				</a-table>
 				</a-card>
 			</div>
 		</a-tab-pane>
@@ -203,30 +236,41 @@
 			slots: { customRender: 'tags' },
 		},
 	];
-
-	const data = [
-	{
-		key: '1',
-		name: 'John Brown',
-		age: 32,
-		address: 'New York No. 1 Lake Park',
-		tags: ['nice', 'developer'],
-	},
-	{
-		key: '2',
-		name: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		tags: ['loser'],
-	},
-	{
-		key: '3',
-		name: 'Joe Black',
-		age: 32,
-		address: 'Sidney No. 1 Lake Park',
-		tags: ['cool', 'teacher'],
-	},
+		const columns2 = [
+		{
+			dataIndex: 'full_name',
+			key: 'full_name',
+			slots: { title: 'customTitle', customRender: 'name' },
+		},
+		{
+			title: 'EMPID',
+			dataIndex: 'emp_id',
+			key: 'emp_id',
+		},
+		{
+			title: 'Address',
+			dataIndex: 'address',
+			key: 'address',
+		},
+		{
+			title: 'email',
+			dataIndex: 'email',
+			key: 'email',
+		},
+		{
+			title: 'Role',
+			key: 'role',
+			dataIndex: 'role',
+			slots: { customRender: 'tags' },
+		},
+		{
+			title: 'Action',
+			key: 'action',
+			slots: { customRender: 'action' },
+		},
 	];
+
+
 
 	export default ({
 		components: {
@@ -266,8 +310,8 @@
 				wrapperCol: {
 					span: 14,
 				},
-				data,
 				columns,
+				columns2,
 				};
 		},
 		methods:{
