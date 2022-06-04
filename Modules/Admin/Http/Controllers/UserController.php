@@ -99,6 +99,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = $this->userRepository->deleteEmployer($id);
+        return back()->with('successMessage', 'Employer deleted!');
     }
 }

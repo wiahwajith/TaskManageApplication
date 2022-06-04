@@ -22,6 +22,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/', 'AdminController@index')->name('dashboard');
     
         Route::resource('user', UserController::class);
+        Route::resource('project', ProjectController::class);
     
     });
 

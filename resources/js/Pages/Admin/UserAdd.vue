@@ -5,7 +5,7 @@
 
 <template>
 	<!-- <Dashboard></Dashboard> -->
-	<Dashboard>
+	<AdminDashboard>
 		<a-tabs type="card" v-model:activeKey="activeKey">
 
 		<a-tab-pane key="1">
@@ -38,18 +38,6 @@
 						</a-tag>
 					</span>
 					</template>
-					<!-- <template #action="{ record }">
-					<span>
-						<a>Invite 一 {{ record.name }}</a>
-						<a-divider type="vertical" />
-						<a>Delete</a>
-						<a-divider type="vertical" />
-						<a class="ant-dropdown-link">
-						More actions
-						<down-outlined />
-						</a>
-					</span>
-					</template> -->
 				</a-table>
 				</a-card>
 			</div>
@@ -179,9 +167,12 @@
 					</template>
 					<template #action="{ record }">
 					<span>
-						<a>Invite 一 {{ record.name }}</a>
+						<a>Invite 一 {{ record.id }}</a>
 						<a-divider type="vertical" />
-						<a>Delete</a>
+						<a
+						@click="userDelete(record.id)"
+						style="color:#ff7a45"
+						>Delete</a>
 						<a-divider type="vertical" />
 						<a class="ant-dropdown-link">
 						More actions
@@ -195,12 +186,12 @@
 		</a-tab-pane>
 	</a-tabs>
 		
-	</Dashboard>
+	</AdminDashboard>
 </template>
 
 <script>
 	// This is the dashboard page, it uses the dashboard layout in: 
-	import Dashboard from '../../layouts/Dashboard';
+	import AdminDashboard from '../../layouts/AdminDashboard' ;
 	import { showAlert } from "../../Utility/Utility";
 	import Swal from "sweetalert2";
 	import { UserSwitchOutlined, TeamOutlined, UserAddOutlined, SmileOutlined, DownOutlined  } from '@ant-design/icons-vue';
@@ -274,7 +265,7 @@
 
 	export default ({
 		components: {
-			Dashboard,
+			AdminDashboard,
 			UserAddOutlined,
 			TeamOutlined,
 			UserSwitchOutlined,
@@ -327,6 +318,17 @@
                 }
             );	
 			},
+			userDelete(id){
+				this.$inertia.delete(
+                route("admin.user.destroy",{user:id}),
+                {
+					onFinish: () => {
+                        showAlert(this.$page);
+						this.resetForm();
+                    }
+                }
+            );	
+			},
 			resetForm(){
 					this.form.name ='';
 					this.form.first_name ='';
@@ -353,7 +355,7 @@
 
 				this.form.join_date = dateString;
 				
-			}
+			},
 		},
 		
 	});

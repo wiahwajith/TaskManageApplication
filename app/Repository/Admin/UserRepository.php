@@ -93,4 +93,10 @@ class UserRepository
                     return true;
                 } return false;
     }
+
+    public function deleteEmployer($id)
+    {
+        $delete = Employer::find($id)->user()->delete();
+        return $delete;
+    }
 }
