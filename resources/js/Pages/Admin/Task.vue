@@ -21,7 +21,7 @@
 				<a-col :span="2"></a-col>
 			</a-row>
 			
-		<a-card title="View all Projects" :bordered="false" style="width: 100%; background-color: #eae8e8b0;">
+		<a-card :title="'View '+project.title +' Project task'" :bordered="false" style="width: 100%; background-color: #eae8e8b0;">
 				<div class="components-page-header-demo-content">
 				<a-row>
 						<a-col :span="8">
@@ -40,7 +40,31 @@
 										<template #actions style="height:10px !important">
 										<setting-outlined key="setting"  />
 										<edit-outlined key="edit" />
-										<ellipsis-outlined key="ellipsis" />
+										<!-- <ellipsis-outlined key="ellipsis" /> -->
+											<a-dropdown key="more">
+											<a-button :style="{ border: 'none', padding: 0 }">
+												<EllipsisOutlined :style="{ fontSize: '20px', verticalAlign: 'top' }" />
+											</a-button>
+											<template #overlay>
+												<a-menu>
+												<a-menu-item>
+													<a target="_blank" rel="noopener noreferrer" @click="updateStatus(task.id,1)">
+													TO DO
+													</a>
+												</a-menu-item>
+												<a-menu-item>
+													<a target="_blank" rel="noopener noreferrer" @click="updateStatus(task.id,2)">
+													PROGRESS
+													</a>
+												</a-menu-item>
+												<a-menu-item>
+													<a target="_blank" rel="noopener noreferrer" @click="updateStatus(task.id,3)">
+													DONE
+													</a>
+												</a-menu-item>
+												</a-menu>
+											</template>
+											</a-dropdown>
 										</template>
 										<a-card-meta  :title="task.title" :description="task.description">
 										
@@ -76,7 +100,30 @@
 										<template #actions style="height:10px !important">
 										<setting-outlined key="setting"  />
 										<edit-outlined key="edit" />
-										<ellipsis-outlined key="ellipsis" />
+											<a-dropdown key="more">
+											<a-button :style="{ border: 'none', padding: 0 }">
+												<EllipsisOutlined :style="{ fontSize: '20px', verticalAlign: 'top' }" />
+											</a-button>
+											<template #overlay>
+												<a-menu>
+												<a-menu-item>
+													<a target="_blank" rel="noopener noreferrer" @click="updateStatus(task.id,1)">
+													TO DO
+													</a>
+												</a-menu-item>
+												<a-menu-item>
+													<a target="_blank" rel="noopener noreferrer" @click="updateStatus(task.id,2)">
+													PROGRESS
+													</a>
+												</a-menu-item>
+												<a-menu-item>
+													<a target="_blank" rel="noopener noreferrer" @click="updateStatus(task.id,3)">
+													DONE
+													</a>
+												</a-menu-item>
+												</a-menu>
+											</template>
+											</a-dropdown>
 										</template>
 										<a-card-meta  :title="task.title" :description="task.description">
 										
@@ -114,7 +161,30 @@
 										<template #actions style="height:10px !important">
 										<setting-outlined key="setting"  />
 										<edit-outlined key="edit" />
-										<ellipsis-outlined key="ellipsis" />
+											<a-dropdown key="more">
+											<a-button :style="{ border: 'none', padding: 0 }">
+												<EllipsisOutlined :style="{ fontSize: '20px', verticalAlign: 'top' }" />
+											</a-button>
+											<template #overlay>
+												<a-menu>
+												<a-menu-item>
+													<a target="_blank" rel="noopener noreferrer" @click="updateStatus(task.id,1)">
+													TO DO
+													</a>
+												</a-menu-item>
+												<a-menu-item>
+													<a target="_blank" rel="noopener noreferrer" @click="updateStatus(task.id,2)">
+													PROGRESS
+													</a>
+												</a-menu-item>
+												<a-menu-item>
+													<a target="_blank" rel="noopener noreferrer" @click="updateStatus(task.id,3)">
+													DONE
+													</a>
+												</a-menu-item>
+												</a-menu>
+											</template>
+											</a-dropdown>
 										</template>
 										<a-card-meta  :title="task.title" :description="task.description">
 										
@@ -243,7 +313,18 @@
                 {
 					onFinish: () => {
                         showAlert(this.$page);
-						this.resetForm();
+                    }
+                }
+            );	
+			},
+			updateStatus(taskId,stateId){
+				this.$inertia.patch(
+                route("admin.task.update",taskId),
+                {state:stateId},
+                {
+					onFinish: () => {
+						$message.success('Processing complete!');
+                        // showAlert(this.$page);
                     }
                 }
             );	

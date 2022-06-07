@@ -91,7 +91,8 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $taskUpdate = $this->TaskRepository->taskStatusUpdate($request,$id);
+        return redirect()->back();
     }
 
     /**

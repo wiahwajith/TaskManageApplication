@@ -42,4 +42,13 @@ class TaskRepository
         return CompanyTaskResource::collection($companyTask);
     }
 
+    public function taskStatusUpdate($request , $taskId)
+    {
+        $task = Task::find($taskId);
+        $task->task_status_id = $request->state;
+        $task->save();
+
+        return $task;
+    }
+
 }
