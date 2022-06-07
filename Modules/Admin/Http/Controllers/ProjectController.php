@@ -2,21 +2,33 @@
 
 namespace Modules\Admin\Http\Controllers;
 
-
+use App\Repository\Admin\ProjectRepository;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use App\Repository\Admin\UserRepository;
 use Illuminate\Contracts\Support\Renderable;
 
 class ProjectController extends Controller
 {
+
+    private $userRepository;
+    private $projectRepository;
+    
+    public function __construct(UserRepository $userRepository ,ProjectRepository $projectRepository)
+    {
+        $this->userRepository = $userRepository;
+        $this->projectRepository = $projectRepository;
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        return Inertia::render('Admin/Projects');
+        $employers = $this->userRepository->AllCompanyUsers();
+        $projects = $this->projectRepository->allCompanyProjects();
+        return Inertia::render('Admin/Projects',compact('employers','projects') );
     }
 
     /**
@@ -35,7 +47,9 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $project = $this->projectRepository->createProject($request);
+        if($project)return back()->with('successMessage', 'project created successfully!');
+        return back()->with('errorMessage', 'problem with project creating!');
     }
 
     /**

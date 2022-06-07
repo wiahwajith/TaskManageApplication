@@ -2,8 +2,9 @@
 
 namespace App\Models\Admin;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Employer extends Model
 {
@@ -45,4 +46,10 @@ class Employer extends Model
   
         return $code;
     }
+    public function scopeFilter($query)
+    {
+        $companyId = Auth::user()->company_id ??'';
+        return $this->query->where('company_id', $companyId);
+    }
+
 }

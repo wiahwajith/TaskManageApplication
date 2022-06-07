@@ -222,8 +222,8 @@
 		},
 		{
 			title: 'Role',
-			key: 'role',
-			dataIndex: 'role',
+			key: 'tag',
+			dataIndex: 'tag',
 			slots: { customRender: 'tags' },
 		},
 	];
@@ -250,8 +250,8 @@
 		},
 		{
 			title: 'Role',
-			key: 'role',
-			dataIndex: 'role',
+			key: 'tag',
+			dataIndex: 'tag',
 			slots: { customRender: 'tags' },
 		},
 		{

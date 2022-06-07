@@ -17,13 +17,19 @@ class CreateProjectTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('description');
+            $table->foreignId('creator_id');
+            $table->foreign('creator_id')->on('users')->references('id')->cascadeOnDelete();
+
             $table->foreignId('assigner_id');
             $table->foreign('assigner_id')->on('users')->references('id')->cascadeOnDelete();
+
             $table->foreignId('customer_id');
             $table->foreign('customer_id')->on('users')->references('id')->cascadeOnDelete();
+
             $table->foreignId('project_status_id');
             $table->foreign('project_status_id')->on('project_status')->references('id')->cascadeOnDelete();
-            $table->float('progress');
+            $table->float('progress')->nullable();
+            $table->date('project_start_date');
             $table->date('project_end_date');
             $table->timestamps();
         });

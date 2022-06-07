@@ -16,7 +16,7 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 class UserRepository 
 {
 
-    public function AllCompanyEmployers()
+    public function AllCompanyUsers()
     {
         $users = Employer::all()->filter();
         return  UserResource::collection($users)->all();

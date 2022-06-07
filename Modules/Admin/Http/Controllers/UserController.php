@@ -32,7 +32,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $employers = $this->userRepository->AllCompanyEmployers();
+        $employers = $this->userRepository->AllCompanyUsers();
         $roles = $this->userRepository->allUserRoles();
 
         return Inertia::render('Admin/UserAdd',compact(['employers','roles']));
