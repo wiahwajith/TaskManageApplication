@@ -19,6 +19,7 @@ class CreateTaskTable extends Migration
             $table->string('description')->nullable();
             $table->date('task_start_date')->nullable();
             $table->date('task_end_date')->nullable();
+            $table->boolean('urgent')->default(0);
             $table->dateTime('worker_task_start_date')->nullable();
             $table->dateTime('worker_task_end_date')->nullable();
 

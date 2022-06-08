@@ -28,7 +28,8 @@ class ProjectController extends Controller
     {
         $employers = $this->userRepository->AllCompanyUsers();
         $projects = $this->projectRepository->allCompanyProjects();
-        return Inertia::render('Admin/Projects',compact('employers','projects') );
+        $projectStatus = $this->projectRepository->allProjectStatus();
+        return Inertia::render('Admin/Projects',compact('employers','projects','projectStatus') );
     }
 
     /**
@@ -80,7 +81,9 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $updatedProject = $this->projectRepository->updateProject($request,$id);
+        if($updatedProject)return back()->with('successMessage', 'project updated successfully!');
+        return back()->with('errorMessage', 'problem with project updating!');
     }
 
     /**

@@ -12,6 +12,7 @@ class Task extends Model
     protected $table ='task';
     protected $fillable = [
         'title',
+        'urgent',
         'description',	
         'task_start_date',	
         'task_end_date'	,

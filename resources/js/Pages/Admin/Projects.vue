@@ -33,12 +33,16 @@
 				:breadcrumb="{ routes }"
 				>
 				<template #tags>
-					<a-tag color="blue">{{ project.status}}</a-tag>
+					<a-tag :color="statusColor(project.project_status_id)" id="projectStatusTag">{{ project.status }}</a-tag>
 				</template>
 				<template #extra>
 					<a-button key="3"> <inertia-link :href="$route('admin.task.show',{task:project.id})">Task</inertia-link> </a-button>
 					<a-button key="2">Operation</a-button>
-					<a-button key="1" type="primary">Primary</a-button>
+					<a-button 
+						key="1" 
+						type="primary"
+						@click="showUpdateModal(project.id)"
+					>Update</a-button>
 					<a-dropdown key="more">
 					<a-button :style="{ border: 'none', padding: 0 }">
 						<EllipsisOutlined :style="{ fontSize: '20px', verticalAlign: 'top' }" />
@@ -152,6 +156,78 @@
 				<a-button key="submit" type="primary" :loading="loading" @click="onSubmit">Create</a-button>
 			</template>
 		</a-modal>
+
+		<!-- ****************************************************** -->
+		<!-- update project model -->
+		<a-modal v-model:visible="visibleUpdateModel" title="Update Project" @ok="handleOk" style="width:900px">
+				
+				<!-- project create form -->
+				<a-form :model="updateForm" :label-col="labelCol" :wrapper-col="wrapperCol">
+					<a-form-item label="Project Title">
+					<a-input v-model:value="updateForm.title" />
+					</a-form-item>
+
+					<a-form-item label="Description" name="desc">
+						<a-textarea v-model:value="updateForm.description"  />
+					</a-form-item>		
+
+					<a-form-item label="Project Assigner" name="region">
+					<a-select v-model:value="updateForm.assigner_id"  placeholder="please select your Project Assigner">
+						<a-select-option  
+						v-for="(employer , index) in listedEmployers"
+						:key="index"
+						:value="employer.id"
+						>
+							{{ employer.full_name }}
+						</a-select-option>
+
+					</a-select>
+					</a-form-item>
+
+					<a-form-item label="Client" name="region">
+					<a-select  v-model:value="updateForm.customer_id"  placeholder="please select your client">
+						<a-select-option  
+						v-for="(client , index) in listedClients"
+						:key="index"
+						:value="client.id"
+						>
+							{{ client.full_name }}
+						</a-select-option>
+
+					</a-select>
+					</a-form-item>
+
+					<a-form-item label="Status" name="region">
+					<a-select  v-model:value="updateForm.project_status_id"  placeholder="please select your client">
+						<a-select-option  
+						v-for="(state , index) in projectStatus"
+						:key="index"
+						:value="state.id"
+						>
+							{{ state.name }}
+						</a-select-option>
+
+					</a-select>
+					</a-form-item>
+
+					<a-form-item label="Duration" name="region">
+						<a-range-picker
+						v-model:value="value"
+						format="YYYY-MM-DD"
+						:placeholder="[ updateForm.project_start_date,updateForm.project_end_date]"
+						:disabledDate="disabledDate"
+						@change="onUpdateDateChange"
+						/>
+					</a-form-item>
+					
+					
+				</a-form>
+
+			<template #footer>
+				<a-button key="back" @click="handleCancel">Close</a-button>
+				<a-button key="submit" type="primary" :loading="loading" @click="onUpdateSubmit(updateForm.id)">Update</a-button>
+			</template>
+		</a-modal>
 			</div>
 		</a-card>
 
@@ -164,6 +240,7 @@
 	import { showAlert } from "../../Utility/Utility";
 	import Swal from "sweetalert2";
 	import { EllipsisOutlined   } from '@ant-design/icons-vue';
+import { object } from 'vue-types';
 
 	export default ({
 		components: {
@@ -173,6 +250,7 @@
 		props: [
 			'employers',
 			'projects',
+			'projectStatus',
 		],
 		data() {
 			return {
@@ -186,43 +264,127 @@
 					project_start_date:'',
 					project_end_date:'',
 				},
+				updateForm:{
+					id:'',
+					title:'',
+					description:'',
+					assigner_id:'',
+					customer_id:'',
+					project_status_id: '',
+					progress:0.0,
+					project_start_date:'',
+					project_end_date:'',
+				},
 				loading: false,
 				visible: false,
+				visibleUpdateModel: false,
+				selectedProjectData: '',
 				labelCol: { span: 4 },
 				wrapperCol: { span: 8 },
 				};
 		},
 		methods:{
-			onSubmit() {
+			onSubmit(projectId) {
+				this.handleOk();
 				this.$inertia.post(
                 route("admin.project.store"),
                 this.form,
                 {
 					onFinish: () => {
                         showAlert(this.$page);
-						this.resetForm();
+						this.handleCancel();
                     }
                 }
             );	
 			},			
 			showModal() {
 			this.visible = true;
+			this.visible = true;
 			},
 			handleOk(e) {
 			this.loading = true;
 			setTimeout(() => {
 				this.visible = false;
-				this.loading = false;
 			}, 3000);
 			},
 			handleCancel(e) {
 			this.visible = false;
+			this.visibleUpdateModel = false;
 			},
 			onDateChange(val){
 
 				this.form.project_start_date = val[0].format('YYYY-MM-DD');
 				this.form.project_end_date = val[1].format('YYYY-MM-DD');
-			}
+			},
+			onUpdateDateChange(val){
+
+				this.updateForm.project_start_date = val[0].format('YYYY-MM-DD');
+				this.updateForm.project_end_date = val[1].format('YYYY-MM-DD');
+			},
+			//update model operation
+			showUpdateModal(projectId){
+				this.selectedProject(projectId);
+				this.setUpdateForm();
+				this.visibleUpdateModel = true;
+			},
+			onUpdateSubmit(projectId){
+
+				// this.handleOk();
+				this.$inertia.put(
+                route("admin.project.update",{project:projectId}),
+                this.updateForm,
+                {
+					onFinish: () => {
+                        showAlert(this.$page);
+						this.handleCancel();
+                    }
+                });	
+			},
+			setUpdateForm(){
+					this.updateForm.id = this.selectedProjectData[0].id;      
+					this.updateForm.title = this.selectedProjectData[0].title ;      
+					this.updateForm.description = this.selectedProjectData[0].description ;      
+					this.updateForm.assigner_id = this.selectedProjectData[0].assigner_id ;      
+					this.updateForm.customer_id = this.selectedProjectData[0].customer_id ;      
+					this.updateForm.project_status_id = this.selectedProjectData[0].project_status_id ;      
+					this.updateForm.progress = this.selectedProjectData[0].progress ;      
+					this.updateForm.project_start_date = this.selectedProjectData[0].project_start_date ;      
+					this.updateForm.project_end_date = this.selectedProjectData[0].project_end_date ;      
+			},
+			selectedProject(projectId) {
+				this.selectedProjectData = this.projects.data.filter(project => project.id == projectId )
+			},
+			statusColor(project_status_id) {
+				
+				var color = 'blue';
+				switch(project_status_id){
+					
+					case 1 :
+						color = 'blue';
+						break;
+					case 2 :
+						color = 'red';
+						break;
+					case 3 :
+						color = 'cyan';
+						break;
+					case 4 :
+						color = 'bgoldlue';
+						break;
+					case 5 :
+						color = 'volcano';
+						break;
+					case 6 :
+						color = 'lime';
+						break;
+					case 7 :
+						color = 'green';
+						break;
+					default:
+						color = 'blue';
+				}
+				return color;
+			},
 		},
 		computed: {
 			listedClients: function () {
@@ -230,7 +392,7 @@
 			},
 			listedEmployers: function () {
 				return this.employers.filter(employer => employer.role != 'Client')
-			}
+			},
 		}
 		
 	});

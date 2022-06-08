@@ -32,7 +32,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Task');
+        $projects = $this->projectRepository->allCompanyProjects();
+        return Inertia::render('Admin/TaskIndex', compact('projects'));
     }
 
     /**
@@ -92,7 +93,8 @@ class TaskController extends Controller
     public function update(Request $request, $id)
     {
         $taskUpdate = $this->TaskRepository->taskStatusUpdate($request,$id);
-        return redirect()->back();
+        if($taskUpdate)return back()->with('successMessage', 'Task updated successfully!');
+        return back()->with('errorMessage', 'problem with task updating!');
     }
 
     /**

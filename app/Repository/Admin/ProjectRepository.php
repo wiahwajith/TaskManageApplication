@@ -5,6 +5,7 @@ namespace App\Repository\Admin;
 use App\Models\Admin\Project;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ProjectResource;
+use App\Models\ProjectStatus;
 
 class ProjectRepository 
 {
@@ -25,6 +26,21 @@ class ProjectRepository
     public function find($id)
     {
         $project = Project::find($id);
+        return $project;
+    }
+
+    public function allProjectStatus()
+    {
+        $status = ProjectStatus::all(['id','name']);
+
+        return $status;
+    }
+
+    public function updateProject($request ,$id)
+    {
+        $project = Project::findOrFail($id);
+        $project = $project->update($request->all());
+
         return $project;
     }
 }

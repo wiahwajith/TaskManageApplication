@@ -26,8 +26,8 @@
 				<a-row>
 						<a-col :span="8">
 							<a-list size="small" bordered >
-								<template #header>
-									<div style="text-align: center;"> <b>TO DO</b> </div>
+								<template #header style="">
+									<div style="text-align: center;background-color:#ffd666"> <b>TO DO</b> </div>
 								</template>
 									<template v-for="task in toDotaskList" :key="task.id">
 									<a-list-item> </a-list-item>
@@ -47,17 +47,17 @@
 											</a-button>
 											<template #overlay>
 												<a-menu>
-												<a-menu-item>
+												<a-menu-item style="background-color:#ffd666">
 													<a target="_blank" rel="noopener noreferrer" @click="updateStatus(task.id,1)">
 													TO DO
 													</a>
 												</a-menu-item>
-												<a-menu-item>
+												<a-menu-item style="background-color:#fff566">
 													<a target="_blank" rel="noopener noreferrer" @click="updateStatus(task.id,2)">
 													PROGRESS
 													</a>
 												</a-menu-item>
-												<a-menu-item>
+												<a-menu-item style="background-color:#d3f261">
 													<a target="_blank" rel="noopener noreferrer" @click="updateStatus(task.id,3)">
 													DONE
 													</a>
@@ -66,6 +66,7 @@
 											</template>
 											</a-dropdown>
 										</template>
+										<a-tag v-if=(task.urgent) style="float:right"  color="#f50">URGENT</a-tag> 
 										<a-card-meta  :title="task.title" :description="task.description">
 										
 										<template #avatar >
@@ -86,7 +87,7 @@
 								<a-list-item></a-list-item>
 								</template>
 								<template #header>
-								<div style="text-align: center;"> <b>PROGRESS</b> </div>
+								<div style="text-align: center;background-color:#fff566"> <b>PROGRESS</b> </div>
 
 								</template>
 
@@ -106,17 +107,17 @@
 											</a-button>
 											<template #overlay>
 												<a-menu>
-												<a-menu-item>
+												<a-menu-item style="background-color:#ffd666">
 													<a target="_blank" rel="noopener noreferrer" @click="updateStatus(task.id,1)">
 													TO DO
 													</a>
 												</a-menu-item>
-												<a-menu-item>
+												<a-menu-item style="background-color:#fff566">
 													<a target="_blank" rel="noopener noreferrer" @click="updateStatus(task.id,2)">
 													PROGRESS
 													</a>
 												</a-menu-item>
-												<a-menu-item>
+												<a-menu-item style="background-color:#d3f261">
 													<a target="_blank" rel="noopener noreferrer" @click="updateStatus(task.id,3)">
 													DONE
 													</a>
@@ -125,6 +126,7 @@
 											</template>
 											</a-dropdown>
 										</template>
+										<a-tag v-if=(task.urgent) style="float:right"  color="#f50">URGENT</a-tag> 
 										<a-card-meta  :title="task.title" :description="task.description">
 										
 										<template #avatar >
@@ -146,7 +148,7 @@
 								<a-list-item></a-list-item>
 								</template>
 								<template #header>
-								<div style="text-align: center;"> <b>DONE</b> </div>
+								<div style="text-align: center;background-color:#d3f261"> <b>DONE</b> </div>
 
 								</template>
 
@@ -167,17 +169,19 @@
 											</a-button>
 											<template #overlay>
 												<a-menu>
-												<a-menu-item>
-													<a target="_blank" rel="noopener noreferrer" @click="updateStatus(task.id,1)">
+												<a-menu-item style="background-color:#ffd666">
+													<a target="_blank" 
+													rel="noopener noreferrer" 
+													@click="updateStatus(task.id,1)">
 													TO DO
 													</a>
 												</a-menu-item>
-												<a-menu-item>
+												<a-menu-item style="background-color:#fff566">
 													<a target="_blank" rel="noopener noreferrer" @click="updateStatus(task.id,2)">
 													PROGRESS
 													</a>
 												</a-menu-item>
-												<a-menu-item>
+												<a-menu-item style="background-color:#d3f261">
 													<a target="_blank" rel="noopener noreferrer" @click="updateStatus(task.id,3)">
 													DONE
 													</a>
@@ -186,8 +190,8 @@
 											</template>
 											</a-dropdown>
 										</template>
+										<a-tag v-if=(task.urgent) style="float:right"  color="#f50">URGENT</a-tag> 
 										<a-card-meta  :title="task.title" :description="task.description">
-										
 										<template #avatar >
 											<a-avatar src="https://joeschmoe.io/api/v1/random" />
 										</template>
@@ -249,6 +253,10 @@
 						@Change="onDateChange"
 						/>
 					</a-form-item>
+
+					<a-form-item label="Priority" name="region">
+						<a-checkbox v-model:checked="form.urgent"><a-tag color="#f50">URGENT</a-tag> </a-checkbox>
+					</a-form-item>
 					
 					
 				</a-form>
@@ -267,7 +275,7 @@
 <script>
 	// This is the dashboard page, it uses the dashboard layout in: 
 	import AdminDashboard from '../../layouts/AdminDashboard' ;
-	import { showAlert } from "../../Utility/Utility";
+	import { showAlert ,showNotify } from "../../Utility/Utility";
 	import Swal from "sweetalert2";
 	import { EllipsisOutlined ,SettingOutlined, EditOutlined  } from '@ant-design/icons-vue';
 
@@ -300,7 +308,9 @@
 					project_id: this.project.id ,
 					task_status_id: '',	
 					assigner_id: '',
+					urgent: 0,
 				},
+				checked: 0,
 				loading: false,
 				visible: false,
 			}
@@ -313,6 +323,8 @@
                 {
 					onFinish: () => {
                         showAlert(this.$page);
+						this.handleCancel();
+						
                     }
                 }
             );	
@@ -323,8 +335,8 @@
                 {state:stateId},
                 {
 					onFinish: () => {
-						$message.success('Processing complete!');
-                        // showAlert(this.$page);
+						// $message.success('Processing complete!');
+                        showNotify(this.$page);
                     }
                 }
             );	
@@ -340,7 +352,14 @@
 			}, 3000);
 			},
 			handleCancel(e) {
-			this.visible = false;
+				this.visible = false;
+	
+				this.form.title = '';
+				this.form.description = '';
+				this.form.task_start_date = '';
+				this.form.task_end_date = '';
+				this.form.task_status_id = '';
+				this.form.assigner_id = '';
 			},
 			onDateChange(val){
 

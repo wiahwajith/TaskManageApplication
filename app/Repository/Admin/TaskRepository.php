@@ -37,8 +37,10 @@ class TaskRepository
         $loggedUser =  Auth::user();
 
         $companyTask = Task::where('project_id', $projectId)
-                            ->where('assigner_id', $loggedUser->id)
-                            ->orWhere('creator_id',$loggedUser->id)->get();
+                            ->where(function($query) use($loggedUser) {
+                                $query->where('assigner_id', $loggedUser->id)
+                                ->orWhere('creator_id',$loggedUser->id);
+                            })->get();
         return CompanyTaskResource::collection($companyTask);
     }
 

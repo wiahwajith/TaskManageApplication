@@ -28,6 +28,7 @@ class CompanyTaskResource extends JsonResource
             'status' => $this->status->toArray(),	
             'creator' => $this->creator->name,	
             'assigner' => $this->assigner->name,
+            'urgent' => $this->urgent,
         ];
     }
 }
