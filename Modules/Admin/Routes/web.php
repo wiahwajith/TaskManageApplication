@@ -2,6 +2,7 @@
 
 use Inertia\Inertia;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +25,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('user', UserController::class);
         Route::resource('project', ProjectController::class);
         Route::resource('task', TaskController::class);
+        Route::resource('quotation', QuotationController::class);
     
     });
 
