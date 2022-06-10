@@ -5,17 +5,37 @@ namespace Modules\Admin\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use App\Repository\Admin\UserRepository;
+use Illuminate\Support\Facades\Redirect;
+use App\Repository\Admin\ProductRepository;
 use Illuminate\Contracts\Support\Renderable;
+use App\Repository\Admin\QuotationRepository;
+use Modules\Admin\Http\Requests\QuotationUpdateRequest;
 
 class QuotationController extends Controller
-{
+{   
+    public $quotationRepository;
+    public $userRepository;
+    public $productRepository;
+
+    public function __construct(QuotationRepository $quotationRepository ,UserRepository $userRepository ,ProductRepository $productRepository) 
+    {
+        $this->quotationRepository = $quotationRepository;
+        $this->userRepository = $userRepository;
+        $this->productRepository = $productRepository;
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        return Inertia::render('Admin/Quotation');
+        $quotation = $this->quotationRepository->createDeafaultQuotation();
+        $company = $this->userRepository->userCompany();
+        $users = $this->userRepository->AllCompanyUsers();
+        $productTypes = $this->productRepository->getAllProductTypes();
+
+        return Inertia::render('Admin/Quotation' ,compact('quotation','company','users','productTypes'));
     }
 
     /**
@@ -63,9 +83,11 @@ class QuotationController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(QuotationUpdateRequest $request, $id)
     {
-        //
+        $quotation = $this->quotationRepository->updateCreatedQuotation($request ,$id);
+        if($quotation)return back()->with('successMessage', 'Quotation created successfully!');
+        return back()->with('errorMessage', 'problem with Quotation creating!');
     }
 
     /**

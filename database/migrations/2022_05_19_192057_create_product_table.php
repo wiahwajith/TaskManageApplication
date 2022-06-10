@@ -18,6 +18,7 @@ class CreateProductTable extends Migration
             $table->string('code');
             $table->string('name');
             $table->string('description');
+            $table->float('cost')->nullable();
 
             $table->foreignId('quotation_id');
             $table->foreign('quotation_id')->on('quotation')->references('id')->cascadeOnDelete();

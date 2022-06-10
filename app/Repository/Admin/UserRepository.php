@@ -99,4 +99,9 @@ class UserRepository
         $delete = Employer::find($id)->user()->delete();
         return $delete;
     }
+
+    public function userCompany()
+    {
+        return Auth::user()->company;
+    }
 }

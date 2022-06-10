@@ -26,6 +26,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('project', ProjectController::class);
         Route::resource('task', TaskController::class);
         Route::resource('quotation', QuotationController::class);
+        Route::resource('product', ProductController::class);
     
     });
 

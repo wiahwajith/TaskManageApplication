@@ -43,7 +43,7 @@ class Employer extends Model
         do {
             $code = random_int(100000, 999999);
         } while (self::where("emp_id", "=", $code)->first());
-  
+        
         return $code;
     }
     public function scopeFilter($query)

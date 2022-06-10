@@ -299,7 +299,6 @@ import { object } from 'vue-types';
 			},			
 			showModal() {
 			this.visible = true;
-			this.visible = true;
 			},
 			handleOk(e) {
 			this.loading = true;
