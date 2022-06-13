@@ -57,18 +57,18 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
     // Route::get('/quotation', function () {
     //     return Inertia::render('Views/Quotation');
     // })->name('quotation');
-    // Route::get('/calendar', function () {
-    //     return Inertia::render('Views/Calendar');
-    // })->name('calendar');
+    Route::get('/calendar', function () {
+        return Inertia::render('Views/Calendar');
+    })->name('calendar');
     // Route::get('/layout', function () {
     //     return Inertia::render('Views/Layout');
     // })->name('layout');
     // Route::get('/404', function () {
     //     return Inertia::render('Views/404');
     // })->name('404');
-    // Route::get('/Profile', function () {
-    //     return Inertia::render('Views/Profile');
-    // })->name('Profile');
+    Route::get('/Profile', function () {
+        return Inertia::render('Views/Profile');
+    })->name('Profile');
     // Route::get('/RTL', function () {
     //     return Inertia::render('Views/RTL');
     // })->name('RTL');

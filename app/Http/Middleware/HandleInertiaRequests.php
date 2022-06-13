@@ -44,7 +44,7 @@ class HandleInertiaRequests extends Middleware
                 'successMessage' => $request->session()->get('successMessage'),
                 'errorMessage' => $request->session()->get('errorMessage'),
             ],
-            'auth.user' => $request->user() ? $request->user()->only('id', 'name', 'email','roleName') : null
+            'auth.user' => $request->user() ? $request->user()->only('id', 'name', 'email','roleName','is_working') : null
         ]);
     }
 }

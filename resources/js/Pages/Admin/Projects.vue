@@ -118,7 +118,7 @@
 						<a-select-option  
 						v-for="(employer , index) in listedEmployers"
 						:key="index"
-						:value="employer.id"
+						:value="employer.user_id"
 						>
 							{{ employer.full_name }}
 						</a-select-option>
@@ -131,7 +131,7 @@
 						<a-select-option  
 						v-for="(client , index) in listedClients"
 						:key="index"
-						:value="client.id"
+						:value="client.user_id"
 						>
 							{{ client.full_name }}
 						</a-select-option>
@@ -176,7 +176,7 @@
 						<a-select-option  
 						v-for="(employer , index) in listedEmployers"
 						:key="index"
-						:value="employer.id"
+						:value="employer.user_id"
 						>
 							{{ employer.full_name }}
 						</a-select-option>
@@ -189,7 +189,7 @@
 						<a-select-option  
 						v-for="(client , index) in listedClients"
 						:key="index"
-						:value="client.id"
+						:value="client.user_id"
 						>
 							{{ client.full_name }}
 						</a-select-option>
@@ -225,7 +225,7 @@
 
 			<template #footer>
 				<a-button key="back" @click="handleCancel">Close</a-button>
-				<a-button key="submit" type="primary" :loading="loading" @click="onUpdateSubmit(updateForm.id)">Update</a-button>
+				<a-button key="submit" type="primary"  @click="onUpdateSubmit(updateForm.id)">Update</a-button>
 			</template>
 		</a-modal>
 			</div>

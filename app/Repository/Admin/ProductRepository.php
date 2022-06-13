@@ -15,6 +15,7 @@ class ProductRepository
 
     public function storeProduct($request)
     {
+
         $product = Product::create($request->all());
 
         return $product;

@@ -57,7 +57,7 @@
 
 <script>
 	// This is the dashboard page, it uses the dashboard layout in: 
-	import Dashboard from '../../layouts/Dashboard';
+	import Dashboard from '../../layouts/AdminDashboard';
 	// "Projects" table component.
 	import CardProjectTable from '../../components/Cards/CardProjectTable' ;
 
