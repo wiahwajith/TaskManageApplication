@@ -59,10 +59,15 @@ class Quotation extends Model
     public static function quoteNumber()
     {
         $userId = Auth::user()->id ??'';
+        $number = 10000;
 
-        $lastQuotationNumber = Self::filter()->own()->latest('created_at')->first()->number + 1;
+        $lastQuotationNumber = Self::filter()->own()->latest('created_at')->first();
 
-        return $lastQuotationNumber;
+        if($lastQuotationNumber){
+            $number = $lastQuotationNumber->number + 1;
+        }
+
+        return $number;
     }
     public static function status($status)
     {
