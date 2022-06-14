@@ -24,7 +24,7 @@ class QuotationRepository
         
         // create new draft quotation
         $defaultQuotation = [
-            'number'=>  Quotation::quoteNumber(),
+            'number'=>  Quotation::quoteNumber()?? 10000,
             'code'=>  'QT',
             'is_open'=> 1,
             'total_amount'=> 0,
@@ -38,12 +38,15 @@ class QuotationRepository
     }
 
     public function updateCreatedQuotation($request , $id)
-    {
-        $quotation = Quotation::findOrFail($id);
+    { 
+        $quotation = Quotation::find($id);
+
+        // $quotation = Quotation::where('id', '=', $id)->update(['is_open' => 0]);
 
         $quotation->is_open = 0;
         $quotation->customer_id = $request->client;
         $quotation->valid_date = $request->valid_date;
+        // $quotation->valid_date ='2022-06-13';
 
         $quotation->save();
 

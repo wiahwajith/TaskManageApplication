@@ -224,7 +224,7 @@
 						<a-select-option  
 						v-for="(employer , index) in listedEmployers"
 						:key="index"
-						:value="employer.id"
+						:value="employer.user_id"
 						>
 							{{ employer.full_name }} 
 						</a-select-option>

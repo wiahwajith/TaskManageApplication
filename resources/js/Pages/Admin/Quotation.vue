@@ -45,7 +45,7 @@
 						<a-select-option  
 						v-for="(client , index) in listedClients"
 						:key="index"
-						:value="client.id"
+						:value="client.user_id"
 						>
 						{{ client.full_name }}
 						</a-select-option>
@@ -119,7 +119,7 @@
 						<a-select-option  
 						v-for="(employer , index) in listedEmployees"
 						:key="index"
-						:value="employer.id"
+						:value="employer.user_id"
 						>
 							{{ employer.full_name }}
 						</a-select-option>
@@ -293,8 +293,6 @@
 
                         showAlert(this.$page);
 						this.$router.push({ name: 'admin.quotation.index' });
-
-
                     }
                 }
             );	

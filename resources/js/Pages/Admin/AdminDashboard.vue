@@ -121,9 +121,9 @@
 	// Counter Widgets stats
 	const stats = [
 		{
-			title: "Today’s Sales",
+			title: "Month Income",
 			value: 53000,
-			prefix: "$",
+			prefix: "Rs.",
 			suffix: "+30%",
 			icon: `
 						<svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -133,7 +133,7 @@
 						</svg>`,
 		},
 		{
-			title: "Today’s Users",
+			title: "Employers",
 			value: 3200,
 			suffix: "+20%",
 			icon: `
@@ -156,9 +156,9 @@
 						</svg>`,
 		},
 		{
-			title: "New Orders",
+			title: "New Quotation",
 			value: 13200,
-			prefix: "$",
+			prefix: "Rs",
 			suffix: "+10%",
 			icon: `
 						<svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

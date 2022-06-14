@@ -6,6 +6,7 @@ use App\Http\Resources\Admin\UserResource;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Admin\Employer;
+use App\Models\Atentendance;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -103,5 +104,22 @@ class UserRepository
     public function userCompany()
     {
         return Auth::user()->company;
+    }
+
+    public function markAttendance($request)
+    {
+        $employer = User::find($request->user_id);
+
+        if($request->type == "start"){
+            $employer->is_working = 1 ;
+            $employer->save();
+        }else{
+            $employer->is_working = 0 ;
+            $employer->save();
+        }
+
+        $attendance = Atentendance::create($request->all());
+
+        return $attendance;
     }
 }
